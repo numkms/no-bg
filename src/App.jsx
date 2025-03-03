@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import "./App.css";
-import logo from "./assets/logo.png";
+import logo from "./assets/logo.webp";
 
 import { analytics, AnalyticsEvents } from "./analytics/firebase";
 import { logEvent } from "firebase/analytics";
@@ -71,7 +71,7 @@ function App() {
 
   return (
     <div
-      className="flex flex-col items-center justify-center min-h-screen bg-gray-100 w-full"
+      className="flex flex-col items-center justify-center h-[calc(100vh-80px)] bg-gray-100 w-full"
       onDrop={(e) => {
         e.preventDefault();
         processFiles(e.dataTransfer.files);
@@ -101,7 +101,7 @@ function App() {
           <label
             htmlFor="upload"
             className="flex flex-col items-center justify-center w-full h-full cursor-pointer"
-            onClick={logEvent(analytics, AnalyticsEvents.ButtonRemoveBgClick)}
+            onClick={() => logEvent(analytics, AnalyticsEvents.ButtonRemoveBgClick)}
           >
             <div className="flex flex-col items-center">
               <label
@@ -137,7 +137,7 @@ function App() {
         {completed ? (
           <>
             <a
-              onClick={logEvent(analytics, AnalyticsEvents.ButtonDownloadClick)}
+              onClick={() => logEvent(analytics, AnalyticsEvents.ButtonDownloadClick)}
               href={imageSrc}
               download="CutBG.png"
             >
@@ -193,13 +193,13 @@ function App() {
             How is your experience?
             <div className="flex flex-row space-x-1 items-center justify-center mt-2">
               <button
-                onClick={logEvent(analytics, AnalyticsEvents.ButtonLikeClick)}
+                onClick={() => logEvent(analytics, AnalyticsEvents.ButtonLikeClick)}
                 className="p-2 rounded bg-accent text-reversed w-40 cursor-pointer"
               >
                 I like it!
               </button>
               <button
-                onClick={logEvent(
+                onClick={() => logEvent(
                   analytics,
                   AnalyticsEvents.ButtonDislikeClick,
                 )}
