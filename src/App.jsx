@@ -13,15 +13,18 @@ function App() {
   const [imageSrc, setImageSrc] = useState(null);
   const [processing, setProcessing] = useState(false);
   const [completed, setCompleted] = useState(false);
+  const [isFeedbackSended, setIsFeedbackSended] = useState(false);
 
   const handleFileChange = (event) => {
     processFiles(event.target.files);
   };
 
   const reset = () => {
+    setFiles([])
     setProcessing(false);
     setImageSrc(null);
     setCompleted(false);
+    setIsFeedbackSended(false);
     logEvent(analytics, AnalyticsEvents.ButtonResetClick);
   };
 
@@ -72,68 +75,68 @@ function App() {
 
   return (
       <>
-          <Metatags t={t} />
-        <div
-            className="flex flex-col items-center justify-center h-[calc(100vh-80px)] bg-gray-100 w-full"
-            onDrop={(e) => {
-              e.preventDefault();
-              processFiles(e.dataTransfer.files);
-            }}
-            onAbort={(e) => e.preventDefault()}
-            onDragOver={(e) => e.preventDefault()}
-        >
-          <h1 className="text-3xl font-bold mb-2 text-center text-gray-600 hidden ">
-            CutBG
-          </h1>
-          <img src={logo} className="w-1/2 md:w-1/4"></img>
-          <p className="text-gray-600 mb-6 text-center mt-10">
-            {t('title')}
-          </p>
-          <div
-              className="chess-background relative flex flex-col items-center justify-center w-84 min-h-64 bg-white border border-gray-300 rounded-xl shadow-md">
-            {imageSrc ? (
-                <img
-                    src={imageSrc}
-                    alt="Uploaded"
-                    className={
-                        "w-full h-full object-cover rounded-t-xl" +
-                " " +
-                (processing ? "animate-pulse" : "")
-              }
-            />
-          ) : (
-            <label
-              htmlFor="upload"
-              className="flex flex-col items-center justify-center w-full h-full cursor-pointer"
-              onClick={() => logEvent(analytics, AnalyticsEvents.ButtonRemoveBgClick)}
-            >
-              <div className="flex flex-col items-center">
-                <label
-                  className="flex bg-accent text-reversed text-white px-4 py-2 rounded-lg"
-                  htmlFor="upload"
+      <Metatags t={t} />
+    <div
+      className="flex flex-col items-center justify-center h-[calc(100vh-80px)] bg-gray-100 w-full"
+      onDrop={(e) => {
+        e.preventDefault();
+        processFiles(e.dataTransfer.files);
+      }}
+      onAbort={(e) => e.preventDefault()}
+      onDragOver={(e) => e.preventDefault()}
+    >
+      <h1 className="text-3xl font-bold mb-2 text-center text-gray-600 hidden ">
+        CutBG
+      </h1>
+      <img src={logo} className="w-1/2 md:w-1/4"></img>
+      <p className="text-gray-600 mb-6 text-center mt-10">
+          {t('title')}
+      </p>
+      <div className="mt-6 chess-background relative flex flex-col items-center justify-center w-84 min-h-64 bg-white border border-gray-300 rounded-xl shadow-md">
+        {imageSrc ? (
+          <img
+            src={imageSrc}
+            alt="Uploaded"
+            className={
+              "w-full h-full object-cover rounded-t-xl" +
+              " " +
+              (processing ? "animate-pulse" : "")
+            }
+          />
+        ) : (
+          <label
+            htmlFor="upload"
+            className="flex flex-col items-center justify-center w-full h-full cursor-pointer"
+            onClick={() => logEvent(analytics, AnalyticsEvents.ButtonRemoveBgClick)}
+          >
+            <div className="flex flex-col items-center">
+              <label
+                className="flex bg-accent text-reversed text-white px-4 py-2 rounded-lg"
+                htmlFor="upload"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6  mr-2"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-6 w-6  mr-2"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1M8 12l4-4m0 0l4 4m-4-4v12"
-                    />
-                  </svg>
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1M8 12l4-4m0 0l4 4m-4-4v12"
+                  />
+                </svg>
                   <div className="cursor-pointer">{t('actionButton')}</div>
-                </label>
+              </label>
                 <p className="text-gray-500 mt-2">{t('subtitle')}</p>
-              </div>
-              <input
-                type="file"
-                id="upload"
+            </div>
+            <input
+              type="file"
+              id="upload"
               className="hidden"
+              accept="image/*"
               onChange={handleFileChange}
             />
           </label>
@@ -194,29 +197,43 @@ function App() {
         ) : null}
         {completed ? (
           <div className="bg-secondary w-full p-4 rounded-b-lg text-center text-gray-600 text-xs">
-            {t('howIsYourExpirience')}
-            <div className="flex flex-row space-x-1 items-center justify-center mt-2">
-              <button
-                onClick={() => logEvent(analytics, AnalyticsEvents.ButtonLikeClick)}
-                className="p-2 rounded bg-accent text-reversed w-40 cursor-pointer"
-              >
-                {t('buttonLike')}
-              </button>
-              <button
-                onClick={() => logEvent(
-                  analytics,
-                  AnalyticsEvents.ButtonDislikeClick,
-                )}
-                className="bg-accent p-2 rounded text-reversed w-40 cursor-pointer"
-              >
-                {t('buttonDislike')}
-              </button>
-            </div>
+            {!isFeedbackSended ? (<div>
+                {t('howIsYourExpirience')}
+              <div className="flex flex-row space-x-1 items-center justify-center mt-2">
+                <button
+                  onClick={() => {
+                    setIsFeedbackSended(true);
+                    logEvent(analytics, AnalyticsEvents.ButtonLikeClick)
+                  }}
+                  className="p-2 rounded bg-accent text-reversed w-40 cursor-pointer"
+                >
+                    {t('buttonLike')}
+                </button>
+                <button
+                  onClick={() => {
+                    setIsFeedbackSended(true);
+                    logEvent(
+                      analytics,
+                      AnalyticsEvents.ButtonDislikeClick,
+                    )
+                  }}
+                  className="bg-accent p-2 rounded text-reversed w-40 cursor-pointer"
+                >
+                    {t('buttonDislike')}
+                </button>
+              </div>
+            </div>) : (
+              <div>
+                Thank you for your feedback
+              </div>
+            )}
+
+
           </div>
         ) : null}
       </div>
     </div>
-      </>
+  </>
   );
 }
 
