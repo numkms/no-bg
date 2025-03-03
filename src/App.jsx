@@ -21,6 +21,7 @@ function App() {
     setProcessing(false);
     setImageSrc(null);
     setCompleted(false);
+    setIsFeedbackSended(false);
     logEvent(analytics, AnalyticsEvents.ButtonResetClick);
   };
 
