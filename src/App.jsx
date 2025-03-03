@@ -10,13 +10,14 @@ function App() {
   const [imageSrc, setImageSrc] = useState(null);
   const [processing, setProcessing] = useState(false);
   const [completed, setCompleted] = useState(false);
+  const [isFeedbackSended, setIsFeedbackSended] = useState(false);
 
   const handleFileChange = (event) => {
     processFiles(event.target.files);
   };
 
   const reset = () => {
-    setFiles([])    
+    setFiles([])
     setProcessing(false);
     setImageSrc(null);
     setCompleted(false);
@@ -189,24 +190,38 @@ function App() {
         ) : null}
         {completed ? (
           <div className="bg-secondary w-full p-4 rounded-b-lg text-center text-gray-600 text-xs">
-            How is your experience?
-            <div className="flex flex-row space-x-1 items-center justify-center mt-2">
-              <button
-                onClick={() => logEvent(analytics, AnalyticsEvents.ButtonLikeClick)}
-                className="p-2 rounded bg-accent text-reversed w-40 cursor-pointer"
-              >
-                I like it!
-              </button>
-              <button
-                onClick={() => logEvent(
-                  analytics,
-                  AnalyticsEvents.ButtonDislikeClick,
-                )}
-                className="bg-accent p-2 rounded text-reversed w-40 cursor-pointer"
-              >
-                I don't like it
-              </button>
-            </div>
+            {!isFeedbackSended ? (<div>
+              How is your experience?
+              <div className="flex flex-row space-x-1 items-center justify-center mt-2">
+                <button
+                  onClick={() => {
+                    setIsFeedbackSended(true);
+                    logEvent(analytics, AnalyticsEvents.ButtonLikeClick)
+                  }}
+                  className="p-2 rounded bg-accent text-reversed w-40 cursor-pointer"
+                >
+                  I like it!
+                </button>
+                <button
+                  onClick={() => {
+                    setIsFeedbackSended(true);
+                    logEvent(
+                      analytics,
+                      AnalyticsEvents.ButtonDislikeClick,
+                    )
+                  }}
+                  className="bg-accent p-2 rounded text-reversed w-40 cursor-pointer"
+                >
+                  I don't like it
+                </button>
+              </div>
+            </div>) : (
+              <div>
+                Thank you for your feedback
+              </div>
+            )}
+            
+
           </div>
         ) : null}
       </div>
