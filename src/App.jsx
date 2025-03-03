@@ -99,7 +99,7 @@ function App() {
           <label
             htmlFor="upload"
             className="flex flex-col items-center justify-center w-full h-full cursor-pointer"
-            onClick={logEvent(analytics, AnalyticsEvents.ButtonRemoveBgClick)}
+            onClick={() => logEvent(analytics, AnalyticsEvents.ButtonRemoveBgClick)}
           >
             <div className="flex flex-col items-center">
               <label
@@ -135,7 +135,7 @@ function App() {
         {completed ? (
           <>
             <a
-              onClick={logEvent(analytics, AnalyticsEvents.ButtonDownloadClick)}
+              onClick={() => logEvent(analytics, AnalyticsEvents.ButtonDownloadClick)}
               href={imageSrc}
               download="CutBG.png"
             >
@@ -191,13 +191,13 @@ function App() {
             How is your experience?
             <div className="flex flex-row space-x-1 items-center justify-center mt-2">
               <button
-                onClick={logEvent(analytics, AnalyticsEvents.ButtonLikeClick)}
+                onClick={() => logEvent(analytics, AnalyticsEvents.ButtonLikeClick)}
                 className="p-2 rounded bg-accent text-reversed w-40 cursor-pointer"
               >
                 I like it!
               </button>
               <button
-                onClick={logEvent(
+                onClick={() => logEvent(
                   analytics,
                   AnalyticsEvents.ButtonDislikeClick,
                 )}
