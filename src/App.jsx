@@ -131,6 +131,7 @@ function App() {
               type="file"
               id="upload"
               className="hidden"
+              accept="image/*"
               onChange={handleFileChange}
             />
           </label>
