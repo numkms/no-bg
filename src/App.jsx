@@ -8,12 +8,19 @@ import { logEvent } from "firebase/analytics";
 function App() {
   const [files, setFiles] = useState([]);
   const [imageSrc, setImageSrc] = useState(null);
-
   const [processing, setProcessing] = useState(false);
+  const [completed, setCompleted] = useState(false);
+
   const handleFileChange = (event) => {
     processFiles(event.target.files);
   };
-  const [completed, setCompleted] = useState(false);
+
+  const reset = () => {
+    setProcessing(false);
+    setImageSrc(null);
+    setCompleted(false);
+    logEvent(analytics, AnalyticsEvents.ButtonResetClick);
+  };
 
   const requestNoBackground = async (data) => {
     try {
@@ -58,13 +65,6 @@ function App() {
     setImageSrc(URL.createObjectURL(files[0]));
     setFiles(files);
     handleRemoveBackground();
-  };
-
-  const reset = () => {
-    setProcessing(false);
-    setImageSrc(null);
-    setCompleted(false);
-    logEvent(analytics, AnalyticsEvents.ButtonResetClick);
   };
 
   return (
