@@ -20,7 +20,6 @@ function App() {
     setProcessing(false);
     setImageSrc(null);
     setCompleted(false);
-    document.getElementById('main-input').value = null
     logEvent(analytics, AnalyticsEvents.ButtonResetClick);
   };
 
