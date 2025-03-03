@@ -27,7 +27,7 @@ function App() {
       console.log("removing....");
       setProcessing(true);
       const response = await fetch(
-        "https://49.13.223.226:3000/remove-background",
+        "https://api.cutbg.org/remove-background",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
