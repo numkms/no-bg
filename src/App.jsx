@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import "./App.css";
-import logo from "./assets/logo.png";
+import logo from "./assets/logo.webp";
 
 import { analytics, AnalyticsEvents } from "./analytics/firebase";
 import { logEvent } from "firebase/analytics";
