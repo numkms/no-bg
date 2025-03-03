@@ -20,7 +20,7 @@ function App() {
       console.log("removing....");
       setProcessing(true);
       const response = await fetch(
-        "http://49.13.223.226:3000/remove-background",
+        "https://49.13.223.226:3000/remove-background",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
