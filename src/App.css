@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Sigmar&display=swap');
 @import "tailwindcss";
 
 body {
@@ -14,3 +15,55 @@ body {
   background-size: 20px 20px;
   background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
 }
+
+* {
+  text-color: var(--textprimary);
+  font-family: Sigmar;
+}
+
+:root {
+  --bgprimary: #F7F7FF;
+  --bgsecondary: #BDD5EA;
+  --textprimary: #495867;
+  --textsecondary:#577399;
+  --textreversed: #F7F7FF;
+  --accent: #FE5F55;
+}
+
+body {
+  background-color: var(--bgprimary);
+}
+
+#root > div {
+  background-color: var(--bgprimary);
+}
+
+.bg-primary {
+  background-color: var(--bgprimary);
+}
+
+.bg-secondary {
+  background-color: var(--bgsecondary);
+}
+
+.text-primary {
+  color: var(--textprimary);
+}
+
+.text-secondary {
+  color: var(--textsecondary);
+}
+
+.text-reversed {
+  color: var(--textreversed);
+}
+
+.accent {
+  color: var(--accent);
+}
+
+.bg-accent {
+  background-color: var(--accent);
+}
+
+
