@@ -84,7 +84,7 @@ function App() {
         CutBG
       </h1>
       <img src={logo} className="w-1/2 md:w-1/4"></img>
-      <p className="text-gray-600 mb-6 text-center mt-6">
+      <p className="text-gray-600 mb-6 text-center mt-2">
         Erase image backgrounds for free
       </p>
       <div className="mt-6 chess-background relative flex flex-col items-center justify-center w-84 min-h-64 bg-white border border-gray-300 rounded-xl shadow-md">
