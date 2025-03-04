@@ -107,6 +107,7 @@ function App() {
           <label
             htmlFor="upload"
             className="flex flex-col items-center justify-center w-full h-full cursor-pointer"
+            aria-label={t('actionButton')}
             onClick={() => logEvent(analytics, AnalyticsEvents.ButtonRemoveBgClick)}
           >
               <div className="flex flex-col items-center">
@@ -137,6 +138,7 @@ function App() {
                   id="upload"
                   className="hidden"
                   accept="image/*"
+                  aria-describedby="file-upload-instructions"
                   onChange={handleFileChange}
             />
           </label>
@@ -147,6 +149,7 @@ function App() {
               onClick={() => logEvent(analytics, AnalyticsEvents.ButtonDownloadClick)}
               href={imageSrc}
               download="CutBG.png"
+              aria-label={t("ariaDownloadButton")}
             >
               <button className="absolute bg-accent text-reversed right-4 top-4 p-1 rounded cursor-pointer">
                 <svg
@@ -168,6 +171,7 @@ function App() {
             <button
               onClick={reset}
               className="absolute bg-accent text-reversed left-4 top-4 p-1 rounded cursor-pointer"
+              aria-label={t("ariaRestButton")}
             >
               <svg
                 width="50"
@@ -206,6 +210,7 @@ function App() {
                     logEvent(analytics, AnalyticsEvents.ButtonLikeClick)
                   }}
                   className="p-2 rounded bg-accent text-reversed w-40 cursor-pointer"
+                  aria-label={t('buttonLike')}
                 >
                     {t('buttonLike')}
                 </button>
@@ -218,6 +223,7 @@ function App() {
                     )
                   }}
                   className="bg-accent p-2 rounded text-reversed w-40 cursor-pointer"
+                  aria-label={t('buttonDislike')}
                 >
                     {t('buttonDislike')}
                 </button>
@@ -227,8 +233,6 @@ function App() {
                 Thank you for your feedback
               </div>
             )}
-
-
           </div>
         ) : null}
       </div>
