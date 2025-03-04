@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import "./App.css";
-import logo from "./assets/logo.webp";
+import logo from "./assets/logo.png";
 
 import { analytics, AnalyticsEvents } from "./analytics/firebase";
 import { logEvent } from "firebase/analytics";
@@ -109,35 +109,35 @@ function App() {
             className="flex flex-col items-center justify-center w-full h-full cursor-pointer"
             onClick={() => logEvent(analytics, AnalyticsEvents.ButtonRemoveBgClick)}
           >
-            <div className="flex flex-col items-center">
-              <label
-                className="flex bg-accent text-reversed text-white px-4 py-2 rounded-lg"
-                htmlFor="upload"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6  mr-2"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1M8 12l4-4m0 0l4 4m-4-4v12"
-                  />
-                </svg>
-                  <div className="cursor-pointer">{t('actionButton')}</div>
-              </label>
-                <p className="text-gray-500 mt-2">{t('subtitle')}</p>
-            </div>
-            <input
-              type="file"
-              id="upload"
-              className="hidden"
-              accept="image/*"
-              onChange={handleFileChange}
+              <div className="flex flex-col items-center">
+                  <label
+                      className="flex bg-accent text-reversed text-white px-4 py-2 rounded-lg"
+                      htmlFor="upload"
+                  >
+                      <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-6 w-6  mr-2"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                      >
+                          <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth="2"
+                              d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1M8 12l4-4m0 0l4 4m-4-4v12"
+                          />
+                      </svg>
+                      <div className="cursor-pointer">{t('actionButton')}</div>
+                  </label>
+                  <p className="text-gray-500 mt-2">{t('subtitle')}</p>
+              </div>
+              <input
+                  type="file"
+                  id="upload"
+                  className="hidden"
+                  accept="image/*"
+                  onChange={handleFileChange}
             />
           </label>
         )}

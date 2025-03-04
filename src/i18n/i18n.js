@@ -9,6 +9,7 @@ import hi from "../../locales/hi.json";
 import it from "../../locales/it.json";
 import ja from "../../locales/ja.json";
 import pt from "../../locales/pt.json";
+import ru from "../../locales/ru.json";
 
 const languages = {
     en: { translation: en },
@@ -20,6 +21,7 @@ const languages = {
     it: { translation: it },
     ja: { translation: ja },
     pt: { translation: pt },
+    ru: { translation: ru },
 }
 
 const userLanguage = navigator.language || navigator.userLanguage
