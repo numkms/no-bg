@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 import logo from "./assets/logo.png";
-
-import { analytics, AnalyticsEvents } from "./analytics/firebase";
+import { analytics, AnalyticsEvents } from "./analytics/firebase.js";
 import { logEvent } from "firebase/analytics";
 import { useTranslation } from 'react-i18next';
-import Metatags from './components/metatags.jsx'
+import Metatags from './components/metatags.jsx';
+import React from "react";
 
 function App() {
   const { t } = useTranslation();

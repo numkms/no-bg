@@ -4,10 +4,11 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
+    "dev": "node server",
+    "build": "npm run build:client && npm run build:server",
+    "build:client": "vite build --outDir dist/client",
+    "build:server": "vite build --ssr src/entry-server.jsx --outDir dist/server",
+    "preview": "cross-env NODE_ENV=production node server"
   },
   "dependencies": {
     "@imgly/background-removal": "^1.5.8",
@@ -19,7 +20,10 @@
     "react-router-dom": "^7.2.0",
     "react-helmet": "^6.1.0",
     "react-i18next": "^15.4.1",
-    "tailwindcss": "^4.0.9"
+    "tailwindcss": "^4.0.9",
+    "compression": "^1.8.0",
+    "express": "^5.0.1",
+    "sirv": "^3.0.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.21.0",
