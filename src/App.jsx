@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
 import "./App.css";
-import logo from "./assets/logo.webp";
+import logo from "./assets/logo.png";
 
 import { analytics, AnalyticsEvents } from "./analytics/firebase";
 import { logEvent } from "firebase/analytics";
+import { useTranslation } from 'react-i18next';
+import Metatags from './components/metatags.jsx'
 
 function App() {
+  const { t } = useTranslation();
   const [files, setFiles] = useState([]);
   const [imageSrc, setImageSrc] = useState(null);
   const [processing, setProcessing] = useState(false);
@@ -71,6 +74,8 @@ function App() {
   };
 
   return (
+      <>
+      <Metatags t={t} />
     <div
       className="flex flex-col items-center justify-center h-[calc(100vh-80px)] bg-gray-100 w-full"
       onDrop={(e) => {
@@ -84,8 +89,8 @@ function App() {
         CutBG
       </h1>
       <img src={logo} className="w-1/2 md:w-1/4"></img>
-      <p className="text-gray-600 mb-6 text-center mt-2">
-        Erase image backgrounds for free
+      <p className="text-gray-600 mb-6 text-center mt-10">
+          {t('title')}
       </p>
       <div className="mt-6 chess-background relative flex flex-col items-center justify-center w-84 min-h-64 bg-white border border-gray-300 rounded-xl shadow-md">
         {imageSrc ? (
@@ -102,37 +107,39 @@ function App() {
           <label
             htmlFor="upload"
             className="flex flex-col items-center justify-center w-full h-full cursor-pointer"
+            aria-label={t('actionButton')}
             onClick={() => logEvent(analytics, AnalyticsEvents.ButtonRemoveBgClick)}
           >
-            <div className="flex flex-col items-center">
-              <label
-                className="flex bg-accent text-reversed text-white px-4 py-2 rounded-lg"
-                htmlFor="upload"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6  mr-2"
-                  fill="none"
-                  viewBox="0 2 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1M8 12l4-4m0 0l4 4m-4-4v12"
-                  />
-                </svg>
-                <div className="cursor-pointer">Start from a photo</div>
-              </label>
-              <p className="text-gray-500 mt-2">Or drop an image here</p>
-            </div>
-            <input
-              type="file"
-              id="upload"
-              className="hidden"
-              accept="image/*"
-              onChange={handleFileChange}
+              <div className="flex flex-col items-center">
+                  <label
+                      className="flex bg-accent text-reversed text-white px-4 py-2 rounded-lg"
+                      htmlFor="upload"
+                  >
+                      <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-6 w-6  mr-2"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                      >
+                          <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth="2"
+                              d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1M8 12l4-4m0 0l4 4m-4-4v12"
+                          />
+                      </svg>
+                      <div className="cursor-pointer">{t('actionButton')}</div>
+                  </label>
+                  <p className="text-gray-500 mt-2">{t('subtitle')}</p>
+              </div>
+              <input
+                  type="file"
+                  id="upload"
+                  className="hidden"
+                  accept="image/*"
+                  aria-describedby="file-upload-instructions"
+                  onChange={handleFileChange}
             />
           </label>
         )}
@@ -142,6 +149,7 @@ function App() {
               onClick={() => logEvent(analytics, AnalyticsEvents.ButtonDownloadClick)}
               href={imageSrc}
               download="CutBG.png"
+              aria-label={t("ariaDownloadButton")}
             >
               <button className="absolute bg-accent text-reversed right-4 top-4 p-1 rounded cursor-pointer">
                 <svg
@@ -163,6 +171,7 @@ function App() {
             <button
               onClick={reset}
               className="absolute bg-accent text-reversed left-4 top-4 p-1 rounded cursor-pointer"
+              aria-label={t("ariaRestButton")}
             >
               <svg
                 width="50"
@@ -193,7 +202,7 @@ function App() {
         {completed ? (
           <div className="bg-secondary w-full p-4 rounded-b-lg text-center text-gray-600 text-xs">
             {!isFeedbackSended ? (<div>
-              How is your experience?
+                {t('howIsYourExpirience')}
               <div className="flex flex-row space-x-1 items-center justify-center mt-2">
                 <button
                   onClick={() => {
@@ -201,8 +210,9 @@ function App() {
                     logEvent(analytics, AnalyticsEvents.ButtonLikeClick)
                   }}
                   className="p-2 rounded bg-accent text-reversed w-40 cursor-pointer"
+                  aria-label={t('buttonLike')}
                 >
-                  I like it!
+                    {t('buttonLike')}
                 </button>
                 <button
                   onClick={() => {
@@ -213,8 +223,9 @@ function App() {
                     )
                   }}
                   className="bg-accent p-2 rounded text-reversed w-40 cursor-pointer"
+                  aria-label={t('buttonDislike')}
                 >
-                  I don't like it
+                    {t('buttonDislike')}
                 </button>
               </div>
             </div>) : (
@@ -222,12 +233,11 @@ function App() {
                 Thank you for your feedback
               </div>
             )}
-            
-
           </div>
         ) : null}
       </div>
     </div>
+  </>
   );
 }
 
