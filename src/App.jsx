@@ -76,7 +76,7 @@ function App() {
   return (
       <>
       <Metatags t={t} />
-    <div
+    <section
       className="flex flex-col items-center justify-center h-[calc(100vh-80px)] bg-gray-100 w-full"
       onDrop={(e) => {
         e.preventDefault();
@@ -236,7 +236,7 @@ function App() {
           </div>
         ) : null}
       </div>
-    </div>
+    </section>
   </>
   );
 }

@@ -10,6 +10,7 @@ import it from "./../../locales/it.json";
 import ja from "./../../locales/ja.json";
 import pt from "./../../locales/pt.json";
 import ru from "./../../locales/ru.json";
+import ko from "./../../locales/ko.json";
 
 console.log(en)
 const languages = {
@@ -23,9 +24,10 @@ const languages = {
     ja: { translation: ja },
     pt: { translation: pt },
     ru: { translation: ru },
+    ko: { translation: ko },
 }
 
-const userLanguage = navigator.language || navigator.userLanguage
+const userLanguage = typeof navigator !== 'undefined' && (navigator.language || navigator.userLanguage)
 const selectedLanguage = Object.keys(languages).includes(userLanguage) ? userLanguage : 'en'
 console.log(selectedLanguage)
 i18n.use(initReactI18next).init({
