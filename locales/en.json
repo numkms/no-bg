@@ -10,5 +10,9 @@
   "metaKeywords": "remove background, background remover, AI background remover, free background remover, erase background, transparent background, cut out background, online background remover, remove background from image",
   "ariaRestButton": "Reset button",
   "ariaDownloadButton": "Download button",
-  "thanksForFeedback": "Thank you for your feedback"
+  "thanksForFeedback": "Thank you for your feedback",
+
+  "serviceName": "CutBG",
+  "serviceDescription": "",
+  "companyName": ""
 }

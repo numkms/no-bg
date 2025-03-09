@@ -1,5 +1,6 @@
 import fs from 'node:fs/promises'
 import express from 'express'
+import {Helmet} from "react-helmet";
 
 // Constants
 const isProduction = process.env.NODE_ENV === 'production'
@@ -53,8 +54,11 @@ app.use('*all', async (req, res) => {
 
     const rendered = await render(url)
 
+    const helmet = Helmet.renderStatic()
+    console.log(helmet)
+
     const html = template
-      .replace(`<!--app-head-->`, rendered.head ?? '')
+      .replace('<!--app-head-->', `${rendered.head ?? ''}${helmet.title.toString()}${helmet.link.toString()}${helmet.meta.toString()}`)
       .replace(`<!--app-html-->`, rendered.html ?? '')
 
     res.status(200).set({ 'Content-Type': 'text/html' }).send(html)

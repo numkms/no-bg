@@ -8,7 +8,7 @@ import {UploadImage} from "./components/UploadImage.jsx";
 import {useImageUpload} from "./hooks/useImageUpload.js";
 
 function App() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const {
     imageNoBgSrc,
     imageWithBgSrc,
@@ -22,31 +22,31 @@ function App() {
   } = useImageUpload();
 
   return (
-      <>
-      <Metatags t={t} />
-    <section
-      className="flex flex-col items-center mt-28 h-[calc(100vh-80px)] w-min m-auto"
-      onDrop={(e) => {
-        e.preventDefault();
-        processFiles(e.dataTransfer.files);
-      }}
-      onAbort={(e) => e.preventDefault()}
-      onDragOver={(e) => e.preventDefault()}
-    >
-      <Header t={t} />
+    <>
+      <Metatags t={t} lang={i18n.language} />
+      <section
+        className="flex flex-col items-center mt-28 h-[calc(100vh-80px)] w-min m-auto"
+        onDrop={(e) => {
+          e.preventDefault();
+          processFiles(e.dataTransfer.files);
+        }}
+        onAbort={(e) => e.preventDefault()}
+        onDragOver={(e) => e.preventDefault()}
+      >
+        <Header t={t} />
 
-      <div className="mt-6 chess-background relative flex flex-col items-center justify-center w-84 min-h-64 bg-white border border-gray-300 rounded-xl shadow-md overflow-hidden">
-        <UploadImage t={t} imageWithBgSrc={imageWithBgSrc} imageNoBgSrc={imageNoBgSrc} processing={processing} handleFileChange={handleFileChange} />
-        <CompleteActionButtons isCompleted={isCompleted} t={t} imageSrc={imageNoBgSrc} reset={reset} />
-      </div>
+        <div className="mt-6 chess-background relative flex flex-col items-center justify-center w-84 min-h-64 bg-white border border-gray-300 rounded-xl shadow-md overflow-hidden">
+          <UploadImage t={t} imageWithBgSrc={imageWithBgSrc} imageNoBgSrc={imageNoBgSrc} processing={processing} handleFileChange={handleFileChange} />
+          <CompleteActionButtons isCompleted={isCompleted} t={t} imageSrc={imageNoBgSrc} reset={reset} />
+        </div>
 
-      <Feedback
-          setIsFeedbackSent={setIsFeedbackSent}
-          isFeedbackSent={isFeedbackSent}
-          isCompleted={isCompleted}
-          t={t}
-      />
-    </section>
+        <Feedback
+            setIsFeedbackSent={setIsFeedbackSent}
+            isFeedbackSent={isFeedbackSent}
+            isCompleted={isCompleted}
+            t={t}
+        />
+      </section>
   </>
   );
 }

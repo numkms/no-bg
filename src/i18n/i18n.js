@@ -12,7 +12,6 @@ import pt from "./../../locales/pt.json";
 import ru from "./../../locales/ru.json";
 import ko from "./../../locales/ko.json";
 
-console.log(en)
 const languages = {
     en: { translation: en },
     cn: { translation: cn },
@@ -29,7 +28,7 @@ const languages = {
 
 const userLanguage = typeof navigator !== 'undefined' && (navigator.language || navigator.userLanguage)
 const selectedLanguage = Object.keys(languages).includes(userLanguage) ? userLanguage : 'en'
-console.log(selectedLanguage)
+
 i18n.use(initReactI18next).init({
     resources: languages,
     lng: selectedLanguage, // Язык по умолчанию
