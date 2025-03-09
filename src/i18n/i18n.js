@@ -11,6 +11,13 @@ import ja from "./../../locales/ja.json";
 import pt from "./../../locales/pt.json";
 import ru from "./../../locales/ru.json";
 import ko from "./../../locales/ko.json";
+import ms from "./../../locales/ms.json";
+import th from "./../../locales/th.json";
+import id from "./../../locales/id.json";
+import vi from "./../../locales/vi.json";
+import kk from "./../../locales/kk.json";
+import ky from "./../../locales/ky.json";
+import uz from "./../../locales/uz.json";
 
 const languages = {
     en: { translation: en },
@@ -24,6 +31,13 @@ const languages = {
     pt: { translation: pt },
     ru: { translation: ru },
     ko: { translation: ko },
+    ms: { translation: ms },
+    th: { translation: th },
+    id: { translation: id },
+    vi: { translation: vi },
+    kk: { translation: kk },
+    ky: { translation: ky },
+    uz: { translation: uz },
 }
 
 const userLanguage = typeof navigator !== 'undefined' && (navigator.language || navigator.userLanguage)
