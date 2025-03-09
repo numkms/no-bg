@@ -65,6 +65,15 @@ export const useImageUpload = () => {
         handleRemoveBackground();
     };
 
+    // обрабатываем paste event для вставки ctrl + v
+    useEffect(() => {
+        document.addEventListener("paste", (event) => {
+            if (event.clipboardData?.files.length) {
+                processFiles(event.clipboardData.files)
+            }
+        });
+    }, []);
+
     useEffect(() => {
         handleRemoveBackground();
     }, [files]);

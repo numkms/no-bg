@@ -1,10 +1,10 @@
 import {logEvent} from "firebase/analytics";
 import {analytics, AnalyticsEvents} from "../analytics/firebase.js";
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {UploadIcon} from "./Icons/UploadIcon.jsx";
 import {Loader} from "./Loader/Loader.jsx";
 
-export const UploadImage = ({imageWithBgSrc, imageNoBgSrc, t, handleFileChange, processing}) => {
+export const UploadImage = ({imageWithBgSrc, imageNoBgSrc, t, handleFileChange, processing, processFiles}) => {
     const [wipeProgress, setWipeProgress] = useState(0);
 
     useEffect(() => {

@@ -55,7 +55,6 @@ app.use('*all', async (req, res) => {
     const rendered = await render(url)
 
     const helmet = Helmet.renderStatic()
-    console.log(helmet)
 
     const html = template
       .replace('<!--app-head-->', `${rendered.head ?? ''}${helmet.title.toString()}${helmet.link.toString()}${helmet.meta.toString()}`)

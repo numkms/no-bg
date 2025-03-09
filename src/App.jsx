@@ -36,7 +36,14 @@ function App() {
         <Header t={t} />
 
         <div className="mt-6 chess-background relative flex flex-col items-center justify-center w-84 min-h-64 bg-white border border-gray-300 rounded-xl shadow-md overflow-hidden">
-          <UploadImage t={t} imageWithBgSrc={imageWithBgSrc} imageNoBgSrc={imageNoBgSrc} processing={processing} handleFileChange={handleFileChange} />
+          <UploadImage
+              t={t}
+              imageWithBgSrc={imageWithBgSrc}
+              imageNoBgSrc={imageNoBgSrc}
+              processing={processing}
+              handleFileChange={handleFileChange}
+              processFiles={processFiles}
+          />
           <CompleteActionButtons isCompleted={isCompleted} t={t} imageSrc={imageNoBgSrc} reset={reset} />
         </div>
 
