@@ -3,6 +3,7 @@ import React from "react";
 
 export default class Metatags extends React.Component {
     render () {
+
         const {t, lang} = this.props
         const jsonLdData = {
             "@context": "https://schema.org",
@@ -18,10 +19,9 @@ export default class Metatags extends React.Component {
             "inLanguage": lang
         };
 
-        console.log(lang)
-
         return (
             <Helmet>
+                <html lang={lang} />
                 <meta property="og:title" content={t('title')}/>
                 <meta property="og:description" content={t('metaDescription')}/>
                 <meta name="description" content={t('metaDescription')}/>

@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import Metatags from './components/metatags.jsx';
+import Metatags from './components/Metatags.jsx';
 import React from "react";
 import {Feedback} from "./components/Feedback.jsx";
 import {Header} from "./components/Header.jsx";
@@ -8,7 +8,7 @@ import {UploadImage} from "./components/UploadImage.jsx";
 import {useImageUpload} from "./hooks/useImageUpload.js";
 import {Alert} from "./components/Alert.jsx";
 
-function App() {
+function App({lang}) {
   const { t, i18n } = useTranslation();
   const {
     imageNoBgSrc,
@@ -23,9 +23,11 @@ function App() {
     processFiles
   } = useImageUpload();
 
+  i18n.changeLanguage(lang);
+
   return (
     <>
-      <Metatags t={t} lang={i18n.language} />
+      <Metatags t={t} lang={lang} i18n={i18n} />
       <section
         className="flex flex-col items-center mt-28 h-[calc(100vh-80px)] w-min m-auto"
         onDrop={(e) => {

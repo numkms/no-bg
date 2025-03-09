@@ -52,13 +52,18 @@ app.use('*all', async (req, res) => {
       render = (await import('./dist/server/entry-server.js')).render
     }
 
-    const rendered = await render(url)
+    // Extract language from the request, e.g., from the "Accept-Language" header
+    const lang = req.headers['accept-language']?.split(',')[0] || 'en'; // fallback to 'en'
+
+    const rendered = await render(url, lang)
 
     const helmet = Helmet.renderStatic()
 
+    const tags = `${rendered.head ?? ''}${helmet.title.toString()}${helmet.link.toString()}${helmet.meta.toString()}`
     const html = template
-      .replace('<!--app-head-->', `${rendered.head ?? ''}${helmet.title.toString()}${helmet.link.toString()}${helmet.meta.toString()}`)
+      .replace('<!--app-head-->', tags)
       .replace(`<!--app-html-->`, rendered.html ?? '')
+      .replace(`<!--app-lang-->`, lang)
 
     res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
   } catch (e) {

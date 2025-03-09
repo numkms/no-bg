@@ -1,14 +1,12 @@
-import { StrictMode } from 'react'
 import { renderToString } from 'react-dom/server'
-import fs from 'fs'
 import App from './App'
 import './i18n/i18n.js';
 /**
  * @param {string} _url
  */
-export function render(_url) {
+export function render(_url, lang) {
   const html = renderToString(
-      <App />
+      <App lang={lang} />
   )
   
   return { html }
