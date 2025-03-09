@@ -22,11 +22,11 @@ export default class Metatags extends React.Component {
         return (
             <Helmet>
                 <html lang={lang} />
-                <meta property="og:title" content={t('title')}/>
+                <meta property="og:title" content={t('metaTitle')}/>
                 <meta property="og:description" content={t('metaDescription')}/>
                 <meta name="description" content={t('metaDescription')}/>
                 <meta name="keywords" content={t('metaKeywords')}/>
-                <meta name="twitter:title" content={t('title')}/>
+                <meta name="twitter:title" content={t('metaTitle')}/>
                 <meta name="twitter:description" content={t('metaDescription')}/>
                 <title>{t('title')}</title>
 
