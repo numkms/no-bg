@@ -6,6 +6,7 @@ import {Header} from "./components/Header.jsx";
 import {CompleteActionButtons} from "./components/CompleteActionButtons.jsx";
 import {UploadImage} from "./components/UploadImage.jsx";
 import {useImageUpload} from "./hooks/useImageUpload.js";
+import {Alert} from "./components/Alert.jsx";
 
 function App() {
   const { t, i18n } = useTranslation();
@@ -16,6 +17,7 @@ function App() {
     isCompleted,
     isFeedbackSent,
     setIsFeedbackSent,
+      error,
     handleFileChange,
     reset,
     processFiles
@@ -35,7 +37,7 @@ function App() {
       >
         <Header t={t} />
 
-        <div className="mt-6 chess-background relative flex flex-col items-center justify-center w-84 min-h-64 bg-white border border-gray-300 rounded-xl shadow-md overflow-hidden">
+        <div className="mt-6 chess-background relative flex flex-col items-center justify-center w-84 min-h-64 sm:w-[500px] sm:h-[350px] bg-white border border-gray-300 rounded-xl shadow-md overflow-hidden">
           <UploadImage
               t={t}
               imageWithBgSrc={imageWithBgSrc}
@@ -47,7 +49,10 @@ function App() {
           <CompleteActionButtons isCompleted={isCompleted} t={t} imageSrc={imageNoBgSrc} reset={reset} />
         </div>
 
-        <Feedback
+          {error && <Alert text={t('somethingWentWrong')} />}
+
+
+          <Feedback
             setIsFeedbackSent={setIsFeedbackSent}
             isFeedbackSent={isFeedbackSent}
             isCompleted={isCompleted}

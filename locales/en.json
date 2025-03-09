@@ -11,8 +11,5 @@
   "ariaRestButton": "Reset button",
   "ariaDownloadButton": "Download button",
   "thanksForFeedback": "Thank you for your feedback",
-
-  "serviceName": "CutBG",
-  "serviceDescription": "",
-  "companyName": ""
+  "somethingWentWrong": "Something went wrong. Please try again!"
 }

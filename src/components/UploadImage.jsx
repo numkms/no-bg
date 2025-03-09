@@ -1,10 +1,10 @@
 import {logEvent} from "firebase/analytics";
 import {analytics, AnalyticsEvents} from "../analytics/firebase.js";
-import React, {useEffect, useRef, useState} from "react";
+import React, {useEffect,  useState} from "react";
 import {UploadIcon} from "./Icons/UploadIcon.jsx";
 import {Loader} from "./Loader/Loader.jsx";
 
-export const UploadImage = ({imageWithBgSrc, imageNoBgSrc, t, handleFileChange, processing, processFiles}) => {
+export const UploadImage = ({imageWithBgSrc, imageNoBgSrc, t, handleFileChange, processing}) => {
     const [wipeProgress, setWipeProgress] = useState(0);
 
     useEffect(() => {
@@ -37,10 +37,11 @@ export const UploadImage = ({imageWithBgSrc, imageNoBgSrc, t, handleFileChange, 
                         </div>
                     )}
 
+
                     {processing &&
                         <>
                             <div className="absolute inset-0 bg-black opacity-50"></div>
-                            <Loader/>
+                            <Loader processing={processing} />
                         </>
                     }
                 </div>

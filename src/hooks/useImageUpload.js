@@ -5,6 +5,7 @@ import {analytics, AnalyticsEvents} from "../analytics/firebase.js";
 export const useImageUpload = () => {
     const [files, setFiles] = useState([]);
     const [imageNoBgSrc, setImageNoBgSrc] = useState(null);
+    const [error, setError] = useState(null);
     const [imageWithBgSrc, setImageWithBgSrc] = useState(null);
     const [processing, setProcessing] = useState(false);
     const [isCompleted, setIsCompleted] = useState(false);
@@ -25,6 +26,7 @@ export const useImageUpload = () => {
 
     const requestNoBackground = async (data) => {
         try {
+            setError(null);
             console.log("removing....");
             setProcessing(true);
             const response = await fetch(
@@ -43,6 +45,7 @@ export const useImageUpload = () => {
             logEvent(analytics, AnalyticsEvents.BackgroundRemovedSuccess);
         } catch (error) {
             reset();
+            setError(error);
             console.log(error);
         }
     };
@@ -85,6 +88,7 @@ export const useImageUpload = () => {
         isCompleted,
         isFeedbackSent,
         setIsFeedbackSent,
+        error,
         handleFileChange,
         reset,
         processFiles
