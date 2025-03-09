@@ -4,25 +4,24 @@ export const Loader = ({ processing }) => {
     const [progress, setProgress] = useState(0);
 
     useEffect(() => {
-        const interval = 50;
+        let interval = 50;
         const step = 1;
+        let timer;
 
-        const timer = setInterval(() => {
+        const updateProgress = () => {
             setProgress((prev) => {
-                if (!processing && prev === 99) {
-                    console.log('here')
-                    return 100
-                }
-
-                return prev + step >= 99 ? 99 : prev + step
+                if (!processing && prev === 99) return 100;
+                const randomValue = Math.random() * 10
+                interval = prev * randomValue
+                return prev + step >= 99 ? 99 : prev + step;
             });
-        }, interval);
 
-        if(!processing && progress === 100) {
-            clearInterval(timer);
-        }
+            timer = setTimeout(updateProgress, interval);
+        };
 
-        return () => clearInterval(timer);
+        updateProgress();
+
+        return () => clearTimeout(timer);
     }, []);
 
     return (
