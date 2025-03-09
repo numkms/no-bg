@@ -1,0 +1,97 @@
+@import "tailwindcss";
+
+body {
+    display: block;
+}
+
+.chess-background {
+    background-color: #fff;
+    background-image:
+            linear-gradient(45deg, #e3e3e3 25%, transparent 25%),
+            linear-gradient(-45deg, #e3e3e3 25%, transparent 25%),
+            linear-gradient(45deg, transparent 75%, #e3e3e3 75%),
+            linear-gradient(-45deg, transparent 75%, #e3e3e3 75%);
+    background-size: 20px 20px;
+    background-position: 0 0, 0 10px, 10px -10px, -10px 0;
+}
+
+* {
+    text-color: var(--textprimary);
+    font-family: Sigmar;
+}
+
+:root {
+    --bgprimary: #F7F7FF;
+    --bgsecondary: #BDD5EA;
+    --textprimary: #495867;
+    --textsecondary:#577399;
+    --textreversed: #F7F7FF;
+    --accent: #3535e1;
+}
+
+body {
+    background-color: var(--bgprimary);
+}
+
+#root > div {
+    background-color: var(--bgprimary);
+}
+
+.bg-primary {
+    background-color: var(--bgprimary);
+}
+
+.bg-secondary {
+    background-color: var(--bgsecondary);
+}
+
+.text-primary {
+    color: var(--textprimary);
+}
+
+.text-secondary {
+    color: var(--textsecondary);
+}
+
+.text-reversed {
+    color: var(--textreversed);
+}
+
+.accent {
+    color: var(--accent);
+}
+
+.bg-accent {
+    background-color: var(--accent);
+}
+
+.loader {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    position: absolute;
+    animation: rotate 1s linear infinite
+}
+.loader::before {
+    content: "";
+    box-sizing: border-box;
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 5px solid var(--bgprimary);
+    animation: prixClipFix 2s linear infinite ;
+}
+
+@keyframes rotate {
+    100%   {transform: rotate(360deg)}
+}
+
+@keyframes prixClipFix {
+    0%   {clip-path:polygon(50% 50%,0 0,0 0,0 0,0 0,0 0)}
+    25%  {clip-path:polygon(50% 50%,0 0,100% 0,100% 0,100% 0,100% 0)}
+    50%  {clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,100% 100%,100% 100%)}
+    75%  {clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,0 100%,0 100%)}
+    100% {clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,0 100%,0 0)}
+}
+
+
