@@ -28,7 +28,7 @@ export default class Metatags extends React.Component {
                 <meta name="keywords" content={t('metaKeywords')}/>
                 <meta name="twitter:title" content={t('metaTitle')}/>
                 <meta name="twitter:description" content={t('metaDescription')}/>
-                <title>{t('title')}</title>
+                <title>{t('metaTitle')}</title>
 
                 <script type="application/ld+json">
                     {
