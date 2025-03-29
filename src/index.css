@@ -17,7 +17,7 @@ body {
 
 * {
     text-color: var(--textprimary);
-    font-family: "Sigmar", sans-serif;
+    font-family: "Sigmar", Arial, Helvetica, sans-serif;
     font-weight: 400;
     font-style: normal;
 }
@@ -97,3 +97,7 @@ body {
 }
 
 
+.tutorial-element {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 600;
+}

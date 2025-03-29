@@ -11,5 +11,6 @@
   "ariaRestButton": "Botón de reinicio",
   "ariaDownloadButton": "Botón de descarga",
   "thanksForFeedback": "Gracias por tus comentarios",
-  "somethingWentWrong": "Algo salió mal. ¡Por favor, inténtalo de nuevo!"
+  "somethingWentWrong": "Algo salió mal. ¡Por favor, inténtalo de nuevo!",
+  "tutorial": "Sube una imagen – simplemente selecciona un archivo de tu dispositivo.\nEspera un poco – procesaremos tu imagen en segundos.\nDescarga el resultado – haz clic en el botón \"Descargar\" en la esquina superior derecha del bloque de la imagen.\n\n¡Listo! 🎉 Ahora tu imagen está guardada en tu dispositivo. 🚀"
 }

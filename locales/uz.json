@@ -11,5 +11,6 @@
   "ariaRestButton": "Qayta tiklash tugmasi",
   "ariaDownloadButton": "Yuklab olish tugmasi",
   "thanksForFeedback": "Fikr-mulohazangiz uchun rahmat",
-  "somethingWentWrong": "Xatolik yuz berdi. Iltimos, qayta urinib ko'ring!"
+  "somethingWentWrong": "Xatolik yuz berdi. Iltimos, qayta urinib ko'ring!",
+  "tutorial": "Rasm yuklang – qurilmangizdan faylni tanlang.\nBiroz kuting – biz rasmni bir necha soniyada ishlab chiqamiz.\nNatijani yuklab oling – rasm blokining o‘ng burchagidagi \"Yuklab olish\" tugmasini bosing.\n\nTayyor! 🎉 Endi rasm qurilmangizda saqlangan. 🚀"
 }

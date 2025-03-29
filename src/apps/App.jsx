@@ -1,12 +1,14 @@
 import { useTranslation } from 'react-i18next';
-import Metatags from './components/Metatags.jsx';
+import Metatags from './../components/metatags.jsx';
 import React from "react";
-import {Feedback} from "./components/Feedback.jsx";
-import {Header} from "./components/Header.jsx";
-import {CompleteActionButtons} from "./components/CompleteActionButtons.jsx";
-import {UploadImage} from "./components/UploadImage.jsx";
-import {useImageUpload} from "./hooks/useImageUpload.js";
-import {Alert} from "./components/Alert.jsx";
+import {Feedback} from "./../components/Feedback.jsx";
+import {Header} from "./../components/Header.jsx";
+import {CompleteActionButtons} from "./../components/CompleteActionButtons.jsx";
+import {UploadImage} from "./../components/UploadImage.jsx";
+import {useImageUpload} from "./../hooks/useImageUpload.js";
+import {Alert} from "./../components/Alert.jsx";
+import Tutorial from '../components/Tutorial.jsx';
+import LangSelect from '../components/LangSelect.jsx';
 
 function App({lang}) {
   const { t, i18n } = useTranslation();
@@ -49,8 +51,8 @@ function App({lang}) {
               processFiles={processFiles}
           />
           <CompleteActionButtons isCompleted={isCompleted} t={t} imageSrc={imageNoBgSrc} reset={reset} />
-        </div>
-
+          
+        </div>        
           {error && <Alert text={t('somethingWentWrong')} />}
 
 
@@ -59,7 +61,13 @@ function App({lang}) {
             isFeedbackSent={isFeedbackSent}
             isCompleted={isCompleted}
             t={t}
-        />
+          />
+          <Tutorial t={t}>
+          </Tutorial>
+        <div className='mt-2 flex justify-end w-full'>
+          <LangSelect></LangSelect>
+        </div>
+          
       </section>
   </>
   );

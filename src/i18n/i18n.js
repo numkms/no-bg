@@ -40,14 +40,45 @@ const languages = {
     uz: { translation: uz },
 }
 
+export const getLanguagesList = () => {
+    return Object.keys(languages)
+}
+
 const userLanguage = typeof navigator !== 'undefined' && (navigator.language || navigator.userLanguage)
-const selectedLanguage = Object.keys(languages).includes(userLanguage) ? userLanguage : 'en'
+const isNavigatorLanguageAvailable = () => {
+    return Object.keys(languages).includes(userLanguage)
+}
+const userLanguageByURL = () => {
+    if (typeof window !== 'undefined') {
+        const url = window.location.href;
+        const urlParts = url.split('/');
+        const langPart = urlParts.find(part => Object.keys(languages).includes(part));
+        if (langPart) {
+            return langPart;
+        }
+    }
+    return null;
+}
+
+const defaultLanguage = () =>  {
+    let userLanguageByURL2 = userLanguageByURL()
+    if (userLanguageByURL2) {
+        return userLanguageByURL2
+    }
+    if (isNavigatorLanguageAvailable()) {
+        return userLanguage
+    }
+    return 'en'
+}
+
+let defaultLanguage2 = defaultLanguage() 
 
 i18n.use(initReactI18next).init({
     resources: languages,
-    lng: selectedLanguage, // Язык по умолчанию
+    lng: defaultLanguage2, // Язык по умолчанию
     fallbackLng: "en",
     interpolation: { escapeValue: false },
 });
 
 export default i18n;
+

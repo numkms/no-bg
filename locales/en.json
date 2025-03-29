@@ -11,5 +11,6 @@
   "ariaRestButton": "Reset button",
   "ariaDownloadButton": "Download button",
   "thanksForFeedback": "Thank you for your feedback",
-  "somethingWentWrong": "Something went wrong. Please try again!"
+  "somethingWentWrong": "Something went wrong. Please try again!",
+  "tutorial": "Upload an image – just select a file from your device.\nWait a bit – we'll process your picture in seconds.\nDownload the result – click the \"Download\" button in the top-right corner of the image block.\n\nDone! 🎉 Now your image is saved on your device. 🚀"
 }

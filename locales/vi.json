@@ -11,5 +11,6 @@
   "ariaRestButton": "Nút Đặt Lại",
   "ariaDownloadButton": "Nút Tải Xuống",
   "thanksForFeedback": "Cảm ơn phản hồi của bạn",
-  "somethingWentWrong": "Đã có lỗi xảy ra. Vui lòng thử lại!"
+  "somethingWentWrong": "Đã có lỗi xảy ra. Vui lòng thử lại!",
+  "tutorial": "Tải lên hình ảnh – chỉ cần chọn tệp từ thiết bị của bạn.\nChờ một chút – chúng tôi sẽ xử lý hình ảnh của bạn trong vài giây.\nTải kết quả – nhấp vào nút \"Tải xuống\" ở góc trên bên phải của khối hình ảnh.\n\nHoàn tất! 🎉 Bây giờ hình ảnh của bạn đã được lưu trên thiết bị. 🚀"
 }

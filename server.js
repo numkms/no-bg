@@ -33,6 +33,12 @@ if (!isProduction) {
   app.use(base, sirv('./dist/client', { extensions: [] }))
 }
 
+app.get('/sitemap.xml', async (req, res) => {
+  const sitemap = await generateSitemap(req);
+  res.header('Content-Type', 'application/xml');
+  res.send(sitemap);
+});
+
 // Serve HTML
 app.use('*all', async (req, res) => {
   try {
@@ -72,6 +78,40 @@ app.use('*all', async (req, res) => {
     res.status(500).end(e.stack)
   }
 })
+
+let languagesCache = [];
+
+const languagesFromFolder = async () => {
+  if (languagesCache.length > 0) {
+    return languagesCache
+  } 
+  const locales = await fs.readdir('./locales');
+  languagesCache = locales.map(file => file.replace('.json', ''))
+  return languagesCache
+}
+
+const generateURLEntity = (req, uri) => {
+  let host = req.get('host')
+  let protocol = req.secure ? 'https' : 'http'
+  let baseUrl = `${protocol}://${host}`
+  return `<url>
+      <loc>${baseUrl}/${uri}</loc>
+      <changefreq>weekly</changefreq>
+      <priority>1</priority> 
+  </url>`;
+};
+
+const generateSitemap = async (req)  => {
+  let languages = await languagesFromFolder();
+  const urls = languages.map(lang => generateURLEntity(req, lang)).join("\n");
+  return `<?xml version="1.0" encoding="UTF-8"?>
+  <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+      ${generateURLEntity(req, '')}
+      ${urls}
+  </urlset>`;
+};
+
+
 
 // Start http server
 app.listen(port, () => {

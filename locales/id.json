@@ -11,5 +11,6 @@
   "ariaRestButton": "Tombol Reset",
   "ariaDownloadButton": "Tombol Unduh",
   "thanksForFeedback": "Terima kasih atas masukan Anda",
-  "somethingWentWrong": "Terjadi kesalahan. Silakan coba lagi!"
+  "somethingWentWrong": "Terjadi kesalahan. Silakan coba lagi!",
+  "tutorial": "Unggah gambar – cukup pilih file dari perangkat Anda.\nTunggu sebentar – kami akan memproses gambar Anda dalam hitungan detik.\nUnduh hasilnya – klik tombol \"Unduh\" di sudut kanan atas blok gambar.\n\nSelesai! 🎉 Sekarang gambar Anda tersimpan di perangkat Anda. 🚀"
 }
