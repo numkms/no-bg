@@ -91,11 +91,8 @@ const languagesFromFolder = async () => {
 }
 
 const generateURLEntity = (req, uri) => {
-  let host = req.get('host')
-  let protocol = req.secure ? 'https' : 'http'
-  let baseUrl = `${protocol}://${host}`
   return `<url>
-      <loc>${baseUrl}/${uri}</loc>
+      <loc>https://cutbg.org/${uri}</loc>
       <changefreq>weekly</changefreq>
       <priority>1</priority> 
   </url>`;
