@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import Metatags from './../components/metatags.jsx';
+import Metatags from './../components/Metatags.jsx';
 import React from "react";
 import {Feedback} from "./../components/Feedback.jsx";
 import {Header} from "./../components/Header.jsx";
