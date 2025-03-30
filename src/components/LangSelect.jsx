@@ -35,7 +35,7 @@ const LangSelect = () => {
                     }
                 } className="appearance-none  rounded p-2 bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 shadow-md">
                     {languages.map((lang) => (
-                        <option key={lang} value={lang}>
+                        <option key={lang} value={lang} selected={lang.toUpperCase() == translation.i18n.language.toUpperCase()}>
                             {flags[lang]} {lang.toUpperCase()}
                         </option>
                     ))}
