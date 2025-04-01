@@ -2,6 +2,16 @@ import fs from 'node:fs/promises'
 import express from 'express'
 import {Helmet} from "react-helmet";
 
+let apps = {
+  cutbg: "cutbg",
+  imageQuestion: "image-question"
+}
+let appComponent = apps.cutbg
+switch (process.argv.slice(2)[0]) {
+  case apps.imageQuestion:
+    appComponent = apps.imageQuestion
+    break;
+}
 // Constants
 const isProduction = process.env.NODE_ENV === 'production'
 const port = process.env.PORT || 5173
@@ -61,12 +71,13 @@ app.use('*all', async (req, res) => {
     // Extract language from the request, e.g., from the "Accept-Language" header
     const lang = req.headers['accept-language']?.split(',')[0] || 'en'; // fallback to 'en'
 
-    const rendered = await render(url, lang)
+    const rendered = await render(url, lang, appComponent)
 
     const helmet = Helmet.renderStatic()
 
     const tags = `${rendered.head ?? ''}${helmet.title.toString()}${helmet.link.toString()}${helmet.meta.toString()}`
     const html = template
+      .replace('<!--appID-->', appComponent)
       .replace('<!--app-head-->', tags)
       .replace(`<!--app-html-->`, rendered.html ?? '')
       .replace(`<!--app-lang-->`, lang)

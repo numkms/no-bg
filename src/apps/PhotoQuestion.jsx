@@ -1,0 +1,72 @@
+import { useTranslation } from 'react-i18next';
+import Metatags from './../components/Metatags.jsx';
+import React from "react";
+import {Feedback} from "./../components/Feedback.jsx";
+import {Header} from "./../components/Header.jsx";
+import {CompleteActionButtons} from "./../components/CompleteActionButtons.jsx";
+import UploadInput from "./../components/UploadInput.jsx";
+import {Alert} from "./../components/Alert.jsx";
+import Tutorial from '../components/Tutorial.jsx';
+import LangSelect from '../components/LangSelect.jsx';
+import Markdown from 'react-markdown'
+import { useQuestionUpload } from '../hooks/useQuestionUpload.js';
+
+export default function PhotoQuestion({lang}) {
+  const { t, i18n } = useTranslation();
+  const {
+    imageNoBgSrc,
+    imageWithBgSrc,
+    processing,
+    isCompleted,
+    isFeedbackSent,
+    setIsFeedbackSent,
+      error,
+    handleFileChange,
+    reset,
+    processFiles,
+    resultText
+  } = useQuestionUpload();
+
+  i18n.changeLanguage(lang);
+
+  return (
+    <>
+      <Metatags t={t} lang={lang} i18n={i18n} />
+      <section
+        className="flex flex-col items-center mt-28 h-[calc(100vh-80px)] w-min m-auto"
+        onDrop={(e) => {
+          e.preventDefault();
+          processFiles(e.dataTransfer.files);
+        }}
+        onAbort={(e) => e.preventDefault()}
+        onDragOver={(e) => e.preventDefault()}
+      >
+        <Header t={t} />
+        <Markdown>
+               {resultText}
+          </Markdown>
+        <div className="mt-6 chess-background relative flex flex-col items-center justify-center w-84 min-h-64 sm:w-[500px] sm:h-[350px] bg-white border border-gray-300 rounded-xl shadow-md overflow-hidden">
+          <UploadInput 
+            subtitle={t('photo_question_ask_something_with_image_desc')}
+            title={t('photo_question_ask_something_with_image')}
+            handleFileChange={handleFileChange}
+          ></UploadInput>
+          <CompleteActionButtons isCompleted={isCompleted} t={t} imageSrc={imageNoBgSrc} reset={reset} />
+        </div>        
+          {error && <Alert text={t('somethingWentWrong')} />}
+          <Feedback
+            setIsFeedbackSent={setIsFeedbackSent}
+            isFeedbackSent={isFeedbackSent}
+            isCompleted={isCompleted}
+            t={t}
+          />
+          <Tutorial t={t}>
+          </Tutorial>
+        <div className='mt-2 flex justify-end w-full'>
+          <LangSelect></LangSelect>
+        </div>
+          
+      </section>
+  </>
+  );
+}

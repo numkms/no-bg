@@ -1,7 +1,7 @@
 import {logEvent} from "firebase/analytics";
 import {analytics, AnalyticsEvents} from "../analytics/firebase.js";
 import React, {useEffect,  useState} from "react";
-import {UploadIcon} from "./Icons/UploadIcon.jsx";
+import UploadInput from "./UploadInput.jsx";
 import {Loader} from "./Loader/Loader.jsx";
 
 export const UploadImage = ({imageWithBgSrc, imageNoBgSrc, t, handleFileChange, processing}) => {
@@ -46,28 +46,7 @@ export const UploadImage = ({imageWithBgSrc, imageNoBgSrc, t, handleFileChange, 
                     }
                 </div>
             ) : (
-                <label
-                    htmlFor="upload"
-                className="flex flex-col items-center justify-center w-full h-full cursor-pointer"
-                aria-label={t('actionButton')}
-                onClick={() => logEvent(analytics, AnalyticsEvents.ButtonRemoveBgClick)}
-            >
-                <span className="flex flex-col items-center cursor-pointer">
-                    <span className="flex bg-accent text-reversed text-white px-4 py-2 rounded-lg cursor-pointer">
-                        <UploadIcon />
-                        <p>{t('actionButton')}</p>
-                    </span>
-                    <p className="text-gray-500 mt-2">{t('subtitle')}</p>
-                </span>
-                <input
-                    type="file"
-                    id="upload"
-                    className="hidden"
-                    accept="image/*"
-                    aria-describedby="file-upload-instructions"
-                    onChange={handleFileChange}
-                />
-            </label>
+                <UploadInput title={t('actionButton')} handleFileChange={handleFileChange} subtitle={t('subtitle')}></UploadInput>
         )}
         </>
     )
