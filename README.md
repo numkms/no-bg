@@ -1,12 +1,71 @@
-# React + Vite
+# No Background - Remove Image Backgrounds
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A Next.js application for removing backgrounds from images using AI technology.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Remove backgrounds from images
+- Support for multiple languages
+- Drag and drop interface
+- Real-time processing
+- Responsive design
 
-## Expanding the ESLint configuration
+## Getting Started
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Prerequisites
+
+- Node.js 18+ 
+- npm or yarn
+
+### Installation
+
+1. Clone the repository
+2. Install dependencies:
+```bash
+npm install
+```
+
+### Development
+
+Run the development server:
+```bash
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+### Building for Production
+
+Build the application:
+```bash
+npm run build
+```
+
+Start the production server:
+```bash
+npm start
+```
+
+## Project Structure
+
+- `src/app/` - Next.js App Router pages and layouts
+- `src/components/` - React components (including MainApp)
+- `src/hooks/` - Custom React hooks
+- `src/i18n/` - Internationalization configuration
+- `locales/` - Translation files
+
+## Migration Notes
+
+This project was migrated from Vite + React to Next.js with App Router. The main application logic was moved from `src/apps/App.jsx` to `src/components/MainApp.jsx` to follow Next.js best practices.
+
+## Technologies Used
+
+- Next.js 15 with App Router
+- React 19
+- Tailwind CSS
+- react-i18next for internationalization
+- @imgly/background-removal for AI background removal
+
+## Troubleshooting
+
+If you encounter issues with Tailwind CSS, make sure you have `@tailwindcss/postcss` installed and your PostCSS configuration is correct.

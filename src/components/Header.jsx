@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 import logo from "../assets/logo_small-1.webp";
 
 export const Header = ({t}) => {
@@ -7,7 +8,7 @@ export const Header = ({t}) => {
             <h1 className="text-3xl font-bold mb-2 text-center text-gray-600 hidden ">
                 CutBG
             </h1>
-            <img src={logo} className="w-1/2 md:w-1/4"  alt="logo image"/>
+            <Image src={logo} className="w-1/2 md:w-1/4" alt="logo image" width={200} height={100} />
             <p className="text-gray-600 mb-4 text-center mt-6">
                 {t('title')}
             </p>

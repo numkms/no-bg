@@ -1,17 +1,20 @@
-import { useTranslation } from 'react-i18next';
-import Metatags from './../components/Metatags.jsx';
-import React from "react";
-import {Feedback} from "./../components/Feedback.jsx";
-import {Header} from "./../components/Header.jsx";
-import {CompleteActionButtons} from "./../components/CompleteActionButtons.jsx";
-import {UploadImage} from "./../components/UploadImage.jsx";
-import {useImageUpload} from "./../hooks/useImageUpload.js";
-import {Alert} from "./../components/Alert.jsx";
-import Tutorial from '../components/Tutorial.jsx';
-import LangSelect from '../components/LangSelect.jsx';
+'use client'
 
-function App({lang}) {
-  const { t, i18n } = useTranslation();
+import { useTranslation } from 'react-i18next';
+import React from "react";
+import { I18nextProvider } from 'react-i18next';
+import i18n from '../i18n/i18n.js';
+import {Feedback} from "./Feedback.jsx";
+import {Header} from "./Header.jsx";
+import {CompleteActionButtons} from "./CompleteActionButtons.jsx";
+import {UploadImage} from "./UploadImage.jsx";
+import {useImageUpload} from "../hooks/useImageUpload.js";
+import {Alert} from "./Alert.jsx";
+import Tutorial from './Tutorial.jsx';
+import LangSelect from './LangSelect.jsx';
+
+function MainAppContent({lang}) {
+  const { t, i18n: i18nInstance } = useTranslation();
   const {
     imageNoBgSrc,
     imageWithBgSrc,
@@ -25,11 +28,13 @@ function App({lang}) {
     processFiles
   } = useImageUpload();
 
-  i18n.changeLanguage(lang);
+  // Изменяем язык только если он передан и отличается от текущего
+  if (lang && i18nInstance.language !== lang) {
+    i18nInstance.changeLanguage(lang);
+  }
 
   return (
     <>
-      <Metatags t={t} lang={lang} i18n={i18n} />
       <section
         className="flex flex-col items-center mt-28 h-[calc(100vh-80px)] w-min m-auto"
         onDrop={(e) => {
@@ -73,4 +78,12 @@ function App({lang}) {
   );
 }
 
-export default App;
+function MainApp({lang}) {
+  return (
+    <I18nextProvider i18n={i18n}>
+      <MainAppContent lang={lang} />
+    </I18nextProvider>
+  );
+}
+
+export default MainApp;
