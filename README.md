@@ -4,7 +4,9 @@ A Next.js application for removing backgrounds from images using AI technology.
 
 ## Features
 
-- Remove backgrounds from images
+- **Remove Background** - AI-powered background removal from images
+- **Compress** - Reduce image file size while maintaining quality (Coming Soon)
+- **Convert** - Convert images between different formats (Coming Soon)
 - Support for multiple languages
 - Drag and drop interface
 - Real-time processing
@@ -49,10 +51,21 @@ npm start
 ## Project Structure
 
 - `src/app/` - Next.js App Router pages and layouts
+  - `/` - Main page (Remove Background)
+  - `/compress` - Image compression page
+  - `/convert` - Image conversion page
 - `src/components/` - React components (including MainApp)
 - `src/hooks/` - Custom React hooks
 - `src/i18n/` - Internationalization configuration
 - `locales/` - Translation files
+
+## Navigation
+
+The application features a responsive header with three main navigation links:
+
+1. **Remove Background** (`/`) - Main functionality for AI background removal
+2. **Compress** (`/compress`) - Image compression tools (under development)
+3. **Convert** (`/convert`) - Image format conversion (under development)
 
 ## Migration Notes
 

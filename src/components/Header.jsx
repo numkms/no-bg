@@ -1,17 +1,55 @@
+'use client'
+
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from 'next/navigation';
 import logo from "../assets/logo_small-1.webp";
 
-export const Header = ({t}) => {
+export const Header = () => {
+    const pathname = usePathname();
+
     return (
         <>
-            <h1 className="text-3xl font-bold mb-2 text-center text-gray-600 hidden ">
-                CutBG
-            </h1>
-            <Image src={logo} className="w-1/2 md:w-1/4" alt="logo image" width={200} height={100} />
-            <p className="text-gray-600 mb-4 text-center mt-6">
-                {t('title')}
-            </p>
+            {/* Навигация */}
+            <nav className="w-full bg-white shadow-md py-4 px-6 mb-8">
+                <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between">
+                    
+                    {/* Навигационные ссылки */}
+                    <div className="flex space-x-6">
+                        <Link 
+                            href="/" 
+                            className={`font-semibold transition-colors duration-200 pb-1 ${
+                                pathname === "/" 
+                                    ? "text-blue-600 border-b-2 border-blue-600" 
+                                    : "text-gray-600 hover:text-gray-800 hover:border-b-2 hover:border-gray-400"
+                            }`}
+                        >
+                            Remove Background
+                        </Link>
+                        <Link 
+                            href="/compress" 
+                            className={`font-semibold transition-colors duration-200 pb-1 ${
+                                pathname === "/compress" 
+                                    ? "text-blue-600 border-b-2 border-blue-600" 
+                                    : "text-gray-600 hover:text-gray-800 hover:border-b-2 hover:border-gray-400"
+                            }`}
+                        >
+                            Compress
+                        </Link>
+                        <Link 
+                            href="/convert" 
+                            className={`font-semibold transition-colors duration-200 pb-1 ${
+                                pathname === "/convert" 
+                                    ? "text-blue-600 border-b-2 border-blue-600" 
+                                    : "text-gray-600 hover:text-gray-800 hover:border-b-2 hover:border-gray-400"
+                            }`}
+                        >
+                            Convert
+                        </Link>
+                    </div>
+                </div>
+            </nav>
         </>
     )
 }
