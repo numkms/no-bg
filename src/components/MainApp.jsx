@@ -11,8 +11,6 @@ import {useImageUpload} from "../hooks/useImageUpload.js";
 import {Alert} from "./Alert.jsx";
 import Tutorial from './Tutorial.jsx';
 import LangSelect from './LangSelect.jsx';
-import Image from "next/image";
-import logo from "../assets/logo_small-1.webp";
 
 function MainAppContent({lang}) {
   const { t, i18n: i18nInstance } = useTranslation();
@@ -41,7 +39,6 @@ function MainAppContent({lang}) {
         <h1 className="text-3xl font-bold mb-2 text-center text-gray-600 hidden">
           CutBG
         </h1>
-        <Image src={logo} className="w-1/2 md:w-1/4 mx-auto" alt="logo image" width={200} height={100} />
         <p className="text-gray-600 mb-4 text-center mt-6">
           {t('title')}
         </p>

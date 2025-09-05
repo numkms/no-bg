@@ -12,11 +12,24 @@ export const Header = () => {
     return (
         <>
             {/* Навигация */}
-            <nav className="w-full bg-white shadow-md py-4 px-6 mb-8">
+            <nav className="w-full bg-white shadow-md py-4 px-6">
                 <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between">
                     
-                    {/* Навигационные ссылки */}
-                    <div className="flex space-x-6">
+                    {/* Логотип */}
+                    <div className="flex items-center mb-4 md:mb-0">
+                        <Link href="/" className="flex items-center">
+                            <Image 
+                                src={logo} 
+                                alt="CutBG Logo" 
+                                width={120} 
+                                height={60}
+                                className="h-8 w-auto"
+                            />
+                        </Link>
+                    </div>
+                    
+                    {/* Навигационные ссылки - по центру */}
+                    <div className="flex space-x-6 order-3 md:order-2">
                         <Link 
                             href="/" 
                             className={`font-semibold transition-colors duration-200 pb-1 ${
@@ -48,6 +61,9 @@ export const Header = () => {
                             Convert
                         </Link>
                     </div>
+                    
+                    {/* Пустой div для балансировки - справа */}
+                    <div className="hidden md:block w-32 order-3"></div>
                 </div>
             </nav>
         </>
