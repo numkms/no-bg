@@ -1,6 +1,4 @@
-import heic2any from 'heic2any'
 import {useUrl, convertAllOfHeif} from 'libheif-web';
-useUrl('/libheif.min.js');
 
 /// Process file to MP4 
 /// @param {File} file - input file
@@ -10,11 +8,13 @@ export const processFile = async (file) => {
     try {
         var stderr = "";
         var stdout = "";
+        useUrl('/libheif.min.js');
         const images = await convertAllOfHeif(file);
         // alert(images.length)
         console.log(images)
         let results = await Promise.all(images.map(async (e) => await e.convert('filename.png', 'image/png')))
         return results.map((e) => URL.createObjectURL(e))
+        const heic2any = (await import('heic2any')).default;
         const imageBlobs = await heic2any({ blob: file, multiple: true, toType: 'image/jpeg' });
         console.log(imageBlobs)
         var blobs = []
@@ -65,6 +65,7 @@ export const processFile = async (file) => {
          return ["heic convertation error:", error];
       }
 }
+
 
 
 /**

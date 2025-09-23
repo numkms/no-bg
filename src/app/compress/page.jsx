@@ -5,31 +5,50 @@ import Compressor from 'compressorjs';
 import { useTranslation } from 'react-i18next';
 import { I18nextProvider } from 'react-i18next';
 import i18n from '../../i18n/i18n.js';
+// Динамический импорт для конвертации
+const convertToJpeg = async (file) => {
+  const { convertToJpeg: converter } = await import('../../utils/imageConverter.js');
+  return converter(file);
+};
 
 function CompressPageContent() {
   const { t } = useTranslation();
   const [file, setFile] = useState(null);
+  const [convertedFile, setConvertedFile] = useState(null);
   const [compressedFile, setCompressedFile] = useState(null);
   const [quality, setQuality] = useState(0.2); // Начинаем с минимального сжатия (максимального качества)
   const [isCompressing, setIsCompressing] = useState(false);
+  const [isConverting, setIsConverting] = useState(false);
   const [previewUrl, setPreviewUrl] = useState(null);
   const [isDragOver, setIsDragOver] = useState(false);
   const [compressedPreviewUrl, setCompressedPreviewUrl] = useState(null);
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
-    if (selectedFile && selectedFile.type.startsWith('image/')) {
-      setFile(selectedFile);
-      setCompressedFile(null);
+    if (selectedFile) {
+      // Проверяем, является ли файл изображением или HEIC/DNG
+      const isImage = selectedFile.type.startsWith('image/');
+      const isHeic = selectedFile.name.toLowerCase().endsWith('.heic') || 
+                     selectedFile.name.toLowerCase().endsWith('.heif') ||
+                     selectedFile.type.includes('heic') || 
+                     selectedFile.type.includes('heif');
+      const isDng = selectedFile.name.toLowerCase().endsWith('.dng') || 
+                    selectedFile.type.includes('dng');
       
-      // Очищаем старые превью
-      if (previewUrl) URL.revokeObjectURL(previewUrl);
-      if (compressedPreviewUrl) URL.revokeObjectURL(compressedPreviewUrl);
-      setCompressedPreviewUrl(null);
-      
-      // Создаем превью изображения
-      const url = URL.createObjectURL(selectedFile);
-      setPreviewUrl(url);
+      if (isImage || isHeic || isDng) {
+        setFile(selectedFile);
+        setConvertedFile(null);
+        setCompressedFile(null);
+        
+        // Очищаем старые превью
+        if (previewUrl) URL.revokeObjectURL(previewUrl);
+        if (compressedPreviewUrl) URL.revokeObjectURL(compressedPreviewUrl);
+        setCompressedPreviewUrl(null);
+        
+        // Создаем превью для всех типов файлов
+        const url = URL.createObjectURL(selectedFile);
+        setPreviewUrl(url);
+      }
     }
   };
 
@@ -38,18 +57,30 @@ function CompressPageContent() {
     setIsDragOver(false);
     
     const droppedFile = e.dataTransfer.files[0];
-    if (droppedFile && droppedFile.type.startsWith('image/')) {
-      setFile(droppedFile);
-      setCompressedFile(null);
+    if (droppedFile) {
+      // Проверяем, является ли файл изображением или HEIC/DNG
+      const isImage = droppedFile.type.startsWith('image/');
+      const isHeic = droppedFile.name.toLowerCase().endsWith('.heic') || 
+                     droppedFile.name.toLowerCase().endsWith('.heif') ||
+                     droppedFile.type.includes('heic') || 
+                     droppedFile.type.includes('heif');
+      const isDng = droppedFile.name.toLowerCase().endsWith('.dng') || 
+                    droppedFile.type.includes('dng');
       
-      // Очищаем старые превью
-      if (previewUrl) URL.revokeObjectURL(previewUrl);
-      if (compressedPreviewUrl) URL.revokeObjectURL(compressedPreviewUrl);
-      setCompressedPreviewUrl(null);
-      
-      // Создаем превью изображения
-      const url = URL.createObjectURL(droppedFile);
-      setPreviewUrl(url);
+      if (isImage || isHeic || isDng) {
+        setFile(droppedFile);
+        setConvertedFile(null);
+        setCompressedFile(null);
+        
+        // Очищаем старые превью
+        if (previewUrl) URL.revokeObjectURL(previewUrl);
+        if (compressedPreviewUrl) URL.revokeObjectURL(compressedPreviewUrl);
+        setCompressedPreviewUrl(null);
+        
+        // Создаем превью для всех типов файлов
+        const url = URL.createObjectURL(droppedFile);
+        setPreviewUrl(url);
+      }
     }
   };
 
@@ -63,25 +94,62 @@ function CompressPageContent() {
     setIsDragOver(false);
   };
 
-  const handleCompress = () => {
+  const handleCompress = async () => {
     if (!file) return;
 
-    setIsCompressing(true);
-    
-    new Compressor(file, {
-      quality: quality,
-      success: (result) => {
-        setCompressedFile(result);
-        // Создаем превью сжатого изображения
-        const compressedUrl = URL.createObjectURL(result);
-        setCompressedPreviewUrl(compressedUrl);
-        setIsCompressing(false);
-      },
-      error: (err) => {
-        console.error('Compression error:', err);
-        setIsCompressing(false);
+    try {
+      // Проверяем, нужно ли конвертировать файл
+      const isHeic = file.name.toLowerCase().endsWith('.heic') || 
+                     file.name.toLowerCase().endsWith('.heif') ||
+                     file.type.includes('heic') || 
+                     file.type.includes('heif');
+      const isDng = file.name.toLowerCase().endsWith('.dng') || 
+                    file.type.includes('dng');
+      
+      let fileToCompress = file;
+      
+      // Если файл нужно конвертировать, делаем это сначала
+      if (isHeic || isDng) {
+        setIsConverting(true);
+        try {
+          const converted = await convertToJpeg(file);
+          setConvertedFile(converted);
+          fileToCompress = converted;
+        } catch (error) {
+          console.error('Conversion error:', error);
+          const errorMessage = error.message.includes('DNG') 
+            ? 'DNG файлы могут не поддерживаться в вашем браузере. Попробуйте использовать HEIC или обычные форматы изображений.'
+            : 'Ошибка конвертации файла: ' + error.message;
+          alert(errorMessage);
+          setIsConverting(false);
+          return;
+        } finally {
+          setIsConverting(false);
+        }
       }
-    });
+      
+      // Теперь сжимаем файл
+      setIsCompressing(true);
+      
+      new Compressor(fileToCompress, {
+        quality: quality,
+        success: (result) => {
+          setCompressedFile(result);
+          // Создаем превью сжатого изображения
+          const compressedUrl = URL.createObjectURL(result);
+          setCompressedPreviewUrl(compressedUrl);
+          setIsCompressing(false);
+        },
+        error: (err) => {
+          console.error('Compression error:', err);
+          setIsCompressing(false);
+        }
+      });
+    } catch (error) {
+      console.error('Error in handleCompress:', error);
+      setIsCompressing(false);
+      setIsConverting(false);
+    }
   };
 
   const handleDownload = () => {
@@ -90,7 +158,14 @@ function CompressPageContent() {
     const url = URL.createObjectURL(compressedFile);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `compressed_${file.name}`;
+    
+    // Создаем имя файла с учетом конвертации
+    const originalName = file.name;
+    const nameWithoutExt = originalName.replace(/\.[^/.]+$/, "");
+    const isConverted = convertedFile !== null;
+    const downloadName = isConverted ? `compressed_${nameWithoutExt}.jpg` : `compressed_${originalName}`;
+    
+    a.download = downloadName;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -147,7 +222,7 @@ function CompressPageContent() {
               <div className="relative">
                 <input
                   type="file"
-                  accept="image/*"
+                  accept="image/*,.heic,.heif,.dng"
                   onChange={handleFileChange}
                   className="hidden"
                   id="file-upload"
@@ -186,6 +261,16 @@ function CompressPageContent() {
                     <div className="flex-1">
                       <p className="text-sm font-medium text-gray-800">{file.name}</p>
                       <p className="text-xs text-gray-600">{formatFileSize(file.size)}</p>
+                      {(file.name.toLowerCase().endsWith('.heic') || 
+                        file.name.toLowerCase().endsWith('.heif') ||
+                        file.name.toLowerCase().endsWith('.dng') ||
+                        file.type.includes('heic') || 
+                        file.type.includes('heif') ||
+                        file.type.includes('dng')) && (
+                        <p className="text-xs text-purple-600 mt-1 font-medium">
+                          ⚡ Будет конвертирован в JPEG перед сжатием
+                        </p>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -229,13 +314,18 @@ function CompressPageContent() {
             {/* Compress Button */}
             <button
               onClick={handleCompress}
-              disabled={!file || isCompressing}
+              disabled={!file || isCompressing || isConverting}
               className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-4 px-6 rounded-xl font-semibold text-lg hover:from-blue-700 hover:to-purple-700 disabled:from-gray-400 disabled:to-gray-400 disabled:cursor-not-allowed transition-all duration-200 transform hover:scale-105 disabled:hover:scale-100 shadow-lg"
             >
-              {isCompressing ? (
+              {isConverting ? (
                 <div className="flex items-center justify-center">
                   <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
-                  {t('compress_processing')}
+                  Конвертация в JPEG...
+                </div>
+              ) : isCompressing ? (
+                <div className="flex items-center justify-center">
+                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+                  Сжатие изображения...
                 </div>
               ) : (
                 t('compress_button')
@@ -292,6 +382,12 @@ function CompressPageContent() {
                       <span className="text-gray-600">{t('compress_original_size')}:</span>
                       <span className="font-semibold text-gray-800">{formatFileSize(file.size)}</span>
                     </div>
+                    {convertedFile && (
+                      <div className="flex justify-between items-center">
+                        <span className="text-gray-600">Конвертированный размер:</span>
+                        <span className="font-semibold text-purple-600">{formatFileSize(convertedFile.size)}</span>
+                      </div>
+                    )}
                     <div className="flex justify-between items-center">
                       <span className="text-gray-600">{t('compress_compressed_size')}:</span>
                       <span className="font-semibold text-green-600">{formatFileSize(compressedFile.size)}</span>
@@ -318,7 +414,7 @@ function CompressPageContent() {
               </div>
             )}
 
-            {!file && !isCompressing && !compressedFile && (
+            {!file && !isCompressing && !isConverting && !compressedFile && (
               <div className="flex flex-col items-center justify-center h-64 text-gray-400">
                 <svg className="w-12 h-12 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />

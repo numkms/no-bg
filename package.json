@@ -13,6 +13,7 @@
     "@tailwindcss/postcss": "^4.1.12",
     "compressorjs": "^1.2.1",
     "firebase": "^11.4.0",
+    "heic2any": "^0.0.4",
     "libheif-web": "^1.0.2",
     "next": "^15.0.0",
     "react": "^19.0.0",
