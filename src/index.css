@@ -3,31 +3,116 @@
 body {
     display: block;
 }
+/* Класс кнопки */
+.btn-arcane {
+    position: relative;
+    display: block;
+    /*border: 1px solid rgba(255, 255, 255, 0.06);*/
+    background: transparent; /* Важно — фон прозрачный чтобы псевдоэлементы были видны */
+    color: #e6f7ff;
+    font-weight: 600;
+    letter-spacing: 0.6px;
+    cursor: pointer;
+    overflow: hidden;
+    -webkit-tap-highlight-color: transparent;
+    transition:
+        transform 0.18s ease,
+        box-shadow 0.18s ease;
+}
 
+.btn-arcane {
+    transform: translateY(-3px) scale(1.03);
+}
+
+/* Вращающийся голографический слой */
+.btn-arcane::before {
+    content: "";
+    position: absolute;
+    inset: -20%; /* немного выходит за границы, чтобы перелив был мягче */
+    z-index: 0;
+    background-image: conic-gradient(
+        from 0deg,
+        #cfcfcf,
+        #3535e1,
+        #3535e1,
+        #cfcfcf
+    );
+    mix-blend-mode: color-dodge; /* даёт блеск */
+    opacity: 0.75;
+    filter: blur(18px) saturate(1.2);
+    pointer-events: none;
+    animation: spin 6s linear infinite;
+    transform-origin: 50% 50%;
+}
+
+/* Затемняющая маска поверх голографии, чтобы сохранить читаемость */
+.btn-arcane::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    border-radius: inherit;
+    background: linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 0.15),
+        rgba(0, 0, 0, 0.15)
+    );
+    mix-blend-mode: luminosity;
+    pointer-events: none;
+}
+
+/* Текст всегда поверх */
+.btn-arcane > span {
+    position: relative;
+    z-index: 4;
+    display: inline-block;
+    text-shadow:
+        0 1px 0 rgba(0, 0, 0, 0.6),
+        0 6px 20px rgba(0, 0, 0, 0.45);
+}
+
+/* Анимация вращения через transform — универсальна */
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Доп: маленькая подсветка при фокусе/клавишах */
+.btn-arcane:focus {
+    outline: none;
+    box-shadow:
+        0 6px 30px rgba(120, 170, 255, 0.08),
+        0 0 0 4px rgba(100, 160, 255, 0.06);
+}
 .chess-background {
     background-color: #fff;
     background-image:
-            linear-gradient(45deg, #e3e3e3 25%, transparent 25%),
-            linear-gradient(-45deg, #e3e3e3 25%, transparent 25%),
-            linear-gradient(45deg, transparent 75%, #e3e3e3 75%),
-            linear-gradient(-45deg, transparent 75%, #e3e3e3 75%);
+        linear-gradient(45deg, #e3e3e3 25%, transparent 25%),
+        linear-gradient(-45deg, #e3e3e3 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #e3e3e3 75%),
+        linear-gradient(-45deg, transparent 75%, #e3e3e3 75%);
     background-size: 20px 20px;
-    background-position: 0 0, 0 10px, 10px -10px, -10px 0;
+    background-position:
+        0 0,
+        0 10px,
+        10px -10px,
+        -10px 0;
 }
 
 * {
     text-color: var(--textprimary);
-    font-family: "Sigmar", Arial, Helvetica, sans-serif;
+    font-family: "Open Sans", Arial, Helvetica, sans-serif;
     font-weight: 400;
     font-style: normal;
 }
 
 :root {
-    --bgprimary: #F7F7FF;
-    --bgsecondary: #BDD5EA;
+    --bgprimary: #f7f7ff;
+    --bgsecondary: #bdd5ea;
     --textprimary: #495867;
-    --textsecondary:#577399;
-    --textreversed: #F7F7FF;
+    --textsecondary: #577399;
+    --textreversed: #f7f7ff;
     --accent: #3535e1;
 }
 
@@ -72,7 +157,7 @@ body {
     height: 80px;
     border-radius: 50%;
     position: absolute;
-    animation: rotate 1s linear infinite
+    animation: rotate 1s linear infinite;
 }
 .loader::before {
     content: "";
@@ -81,21 +166,39 @@ body {
     inset: 0;
     border-radius: 50%;
     border: 5px solid var(--bgprimary);
-    animation: prixClipFix 2s linear infinite ;
+    animation: prixClipFix 2s linear infinite;
 }
 
 @keyframes rotate {
-    100%   {transform: rotate(360deg)}
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 @keyframes prixClipFix {
-    0%   {clip-path:polygon(50% 50%,0 0,0 0,0 0,0 0,0 0)}
-    25%  {clip-path:polygon(50% 50%,0 0,100% 0,100% 0,100% 0,100% 0)}
-    50%  {clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,100% 100%,100% 100%)}
-    75%  {clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,0 100%,0 100%)}
-    100% {clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,0 100%,0 0)}
+    0% {
+        clip-path: polygon(50% 50%, 0 0, 0 0, 0 0, 0 0, 0 0);
+    }
+    25% {
+        clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 0, 100% 0, 100% 0);
+    }
+    50% {
+        clip-path: polygon(
+            50% 50%,
+            0 0,
+            100% 0,
+            100% 100%,
+            100% 100%,
+            100% 100%
+        );
+    }
+    75% {
+        clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 100%, 0 100%, 0 100%);
+    }
+    100% {
+        clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 100%, 0 100%, 0 0);
+    }
 }
-
 
 .tutorial-element {
     font-family: Arial, Helvetica, sans-serif;

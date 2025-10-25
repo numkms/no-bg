@@ -1,16 +1,18 @@
-import { useTranslation } from 'react-i18next';
-import Metatags from './../components/Metatags.jsx';
+import { useTranslation } from "react-i18next";
+import Metatags from "./../components/Metatags.jsx";
 import React from "react";
-import {Feedback} from "./../components/Feedback.jsx";
-import {Header} from "./../components/Header.jsx";
-import {CompleteActionButtons} from "./../components/CompleteActionButtons.jsx";
-import {UploadImage} from "./../components/UploadImage.jsx";
-import {useImageUpload} from "./../hooks/useImageUpload.js";
-import {Alert} from "./../components/Alert.jsx";
-import Tutorial from '../components/Tutorial.jsx';
-import LangSelect from '../components/LangSelect.jsx';
+import { Feedback } from "./../components/Feedback.jsx";
+import { Header } from "./../components/Header.jsx";
+import { CompleteActionButtons } from "./../components/CompleteActionButtons.jsx";
+import { UploadImage } from "./../components/UploadImage.jsx";
+import { useImageUpload } from "./../hooks/useImageUpload.js";
+import { Alert } from "./../components/Alert.jsx";
+import Tutorial from "../components/Tutorial.jsx";
+import LangSelect from "../components/LangSelect.jsx";
+import { BuyMeCoffee } from "../components/BuyMeCoffee.jsx";
+import useScript from "../hooks/useScript.js";
 
-function App({lang}) {
+function App({ lang }) {
   const { t, i18n } = useTranslation();
   const {
     imageNoBgSrc,
@@ -19,12 +21,12 @@ function App({lang}) {
     isCompleted,
     isFeedbackSent,
     setIsFeedbackSent,
-      error,
+    error,
     handleFileChange,
     reset,
-    processFiles
+    processFiles,
   } = useImageUpload();
-
+  useScript("https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js");
   i18n.changeLanguage(lang);
 
   return (
@@ -43,33 +45,35 @@ function App({lang}) {
 
         <div className="mt-6 chess-background relative flex flex-col items-center justify-center w-84 min-h-64 sm:w-[500px] sm:h-[350px] bg-white border border-gray-300 rounded-xl shadow-md overflow-hidden">
           <UploadImage
-              t={t}
-              imageWithBgSrc={imageWithBgSrc}
-              imageNoBgSrc={imageNoBgSrc}
-              processing={processing}
-              handleFileChange={handleFileChange}
-              processFiles={processFiles}
+            t={t}
+            imageWithBgSrc={imageWithBgSrc}
+            imageNoBgSrc={imageNoBgSrc}
+            processing={processing}
+            handleFileChange={handleFileChange}
+            processFiles={processFiles}
           />
-          <CompleteActionButtons isCompleted={isCompleted} t={t} imageSrc={imageNoBgSrc} reset={reset} />
-          
-        </div>        
-          {error && <Alert text={t('somethingWentWrong')} />}
-
-
-          <Feedback
-            setIsFeedbackSent={setIsFeedbackSent}
-            isFeedbackSent={isFeedbackSent}
+          <CompleteActionButtons
             isCompleted={isCompleted}
             t={t}
+            imageSrc={imageNoBgSrc}
+            reset={reset}
           />
-          <Tutorial t={t}>
-          </Tutorial>
-        <div className='mt-2 flex justify-end w-full'>
+        </div>
+        {error && <Alert text={t("somethingWentWrong")} />}
+
+        <Feedback
+          setIsFeedbackSent={setIsFeedbackSent}
+          isFeedbackSent={isFeedbackSent}
+          isCompleted={isCompleted}
+          t={t}
+        />
+        <Tutorial t={t}></Tutorial>
+        <div className="mt-2 flex justify-between w-full">
+          <BuyMeCoffee i18n={i18n} t={t} />
           <LangSelect></LangSelect>
         </div>
-          
       </section>
-  </>
+    </>
   );
 }
 
